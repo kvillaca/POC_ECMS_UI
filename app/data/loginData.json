@@ -1,0 +1,44 @@
+[
+  'userData': [
+    {
+      'username': 'user1',
+      'password': 'somepassword1',
+      'lastLogIn' : '2015-01-03',
+      'firstName' : 'John',
+      'lastName' : 'Doe',
+      'role': 'editor'
+    },
+    {
+    'username': 'user2',
+    'password': 'somepassword2',
+    'lastLogIn' : '2015-03-04',
+    'firstName' : 'Michael',
+    'lastName' : 'Smith',
+    'role': 'admin'
+    },
+    {
+    'username': 'user3',
+    'password': 'somepassword3',
+    'lastLogIn' : '2014-06-15',
+    'firstName' : 'John',
+    'lastName' : 'Johnson',
+    'role': 'editor'
+    },
+    {
+    'username': 'user4',
+    'password': 'somepassword4',
+    'lastLogIn' : '2012-10-03',
+    'firstName' : 'Jane',
+    'lastName' : 'Nick',
+    'role': 'admin'
+    },
+    {
+    'username': 'user5',
+    'password': 'somepassword5',
+    'lastLogIn' : '2015-05-25',
+    'firstName' : 'George',
+    'lastName' : 'Brown',
+    'role': 'subscriber'
+    }
+  ]
+]
