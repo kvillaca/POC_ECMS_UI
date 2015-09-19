@@ -49,10 +49,10 @@ angular.module('ecmsEcmsUiApp').controller('LoginController',
 
 
             // Restangular call for Authenticate user!
-            Restangular.one('/POC_ECMS_AUTH/rest/auth/login').post('authenticate', angular.toJson(jsonInput, true)).
+            Restangular.one('POC_ECMS_AUTH/rest/auth/login').post('validate/', angular.toJson(jsonInput, true)).
                 then(function (response) {
                     $timeout(function () {
-                        var sessionKey = response.headers('HEADER_VALUES');
+                        var sessionKey = response.headers('HEADER');
                         $sessionStorage.$default({session: null});
                         ecmsSession.set(sessionKey, true);
                         updateRestangularHeaders.addSessionId(sessionKey);

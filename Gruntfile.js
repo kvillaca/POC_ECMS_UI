@@ -40,10 +40,6 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 }
             },
-            jsTest: {
-                files: ['test/spec/{,*/}*.js'],
-                tasks: ['newer:jshint:test', 'karma']
-            },
             styles: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.css', '<%= yeoman.app %>/styles/{,*/}*.less'],
                 tasks: ['less', 'concat', 'newer:copy:styles', 'autoprefixer']
@@ -128,10 +124,18 @@ module.exports = function (grunt) {
                 },
                 proxies: [
                     {
-                        context: '/rest',
+                        context: '/POC_ECMS_AUTH',
                         host: 'localhost',
                         port: 8080,
                         https: false
+                        //xforward: false
+                    },
+                    {
+                        context: '/taxonomy',
+                        host: 'localhost',
+                        port: 8080,
+                        https: false
+                        //xforward: false
                     }
                 ]
                 //proxies: [
@@ -212,7 +216,7 @@ module.exports = function (grunt) {
             }
         },
 
-        // Automatically inject Bower components into the app
+         //Automatically inject Bower components into the app
         wiredep: {
             app: {
                 src: ['<%= yeoman.app %>/index.html'],
@@ -220,7 +224,7 @@ module.exports = function (grunt) {
             },
             test: {
                 devDependencies: true,
-                src: '<%= karma.unit.configFile %>',
+                src: '',
                 ignorePath: /\.\.\//,
                 fileTypes: {
                     js: {
@@ -374,21 +378,6 @@ module.exports = function (grunt) {
             }
         },
 
-        // ngmin tries to make the code safe for minification automatically by
-        // using the Angular long form for dependency injection. It doesn't work on
-        // things like resolve or inject so those have to be done manually.
-        /*ngmin: {
-            dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '.tmp/concat/scripts',
-                        src: ['*.js'],
-                        dest: '.tmp/concat/scripts'
-                    }
-                ]
-            }
-        },*/
 
 
         // Replace Google CDN references
@@ -464,13 +453,6 @@ module.exports = function (grunt) {
             ]
         },
 
-        // Test settings
-        karma: {
-            unit: {
-                configFile: 'karma.conf.js',
-                singleRun: true
-            }
-        },
 
         // Less
         less: {
@@ -553,6 +535,16 @@ module.exports = function (grunt) {
             return grunt.task.run(['build', 'connect:dist:keepalive']);
         }
 
+        //grunt.task.run([
+        //    'clean:server',
+        //    'wiredep',
+        //    'concurrent:server',
+        //    'autoprefixer:server',
+        //    'configureProxies:server',
+        //    'connect:server',
+        //    'watch'
+        //]);
+
         grunt.task.run([
             'clean:server',
             'wiredep',
@@ -574,8 +566,7 @@ module.exports = function (grunt) {
         'wiredep',
         'concurrent:test',
         'autoprefixer',
-        'connect:test',
-        'karma'
+        'connect:test'
     ]);
 
     grunt.registerTask('build', [
@@ -592,7 +583,6 @@ module.exports = function (grunt) {
         'filerev', //Adds dynamic revision to file names to bust cache
         'usemin', //rewrites index.html
         'htmlmin', //minify html
-        'karma', // run unit tests
         'deploy' // build war file
     ]);
 
