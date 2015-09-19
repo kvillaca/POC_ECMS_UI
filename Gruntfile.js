@@ -127,14 +127,17 @@ module.exports = function (grunt) {
                         context: '/POC_ECMS_AUTH',
                         host: 'localhost',
                         port: 8080,
-                        https: false
+                        https: false,
+                        changeOrigin: true
                         //xforward: false
                     },
                     {
                         context: '/taxonomy',
                         host: 'localhost',
                         port: 8080,
-                        https: false
+                        https: false,
+                        changeOrigin: true,
+                        rewrite: {'/POC_ECMS_AUTH' : '/POC_ECMS_AUTH'}
                         //xforward: false
                     }
                 ]

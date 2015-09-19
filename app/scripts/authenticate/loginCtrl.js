@@ -64,10 +64,10 @@ angular.module('ecmsEcmsUiApp').controller('LoginController',
                             username: undefined,
                             password: undefined
                         };
-                        if (_.has($rootScope.header, "HEADER_VALUES")) {
+                        if (_.has($rootScope.header, 'HEADER_VALUES')) {  // jshint ignore:line
                             if ($rootScope.header.HEADER_VALUES.length === 3) {
                                 // need check if the HEADER_VALUES has all items populated.
-                                $location.path("/Taxonomy");
+                                $location.path('/Taxonomy');
                             }
                         }
                         console.log($rootScope.header);

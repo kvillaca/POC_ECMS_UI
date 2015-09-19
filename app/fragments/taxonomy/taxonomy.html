@@ -4,10 +4,64 @@
         role="formContentList"
         name="taxonomyForm"
         novalidate>
-        <h1>Taxonomy&nbsp;<strong><span>:D</span></strong></h1>
-        <br>
-        <div id="lookupCompanyTerm" class="form-group">
+        <div class="form-group">
+            <div class="form-inline">
+                <button
+                    class="btn btn-secondary btn-xs"
+                    ng-click="goBack()"
+                    style="margin-left: 5px;">Go Back</button>
+                <button
+                    class="btn btn-secondary btn-xs"
+                    ng-click="revokeToken()"
+                    style="margin-left: 5px;">Clear Token</button>
+                <h1>Taxonomy&nbsp;<strong><span>:D</span></strong></h1>
+            </div>
+            <div id="errorShown" ng-show="errorResponse" ng-hide="!errorResponse">
+                <div class="alert alert-danger" >{{errorMessage.errorCode}} : {{errorMessage.message}}</div>
+            </div>
 
+        </div>
+        <br>
+        <h3>Call LookUp Company Term Service</h3>
+        <div id="lookupCompanyTerm" class="form-group">
+            <label for="inputCompany" class="control-label">Company</label>
+            <input type="text" id="inputCompany" class="form-control" placeholder="Type the company"
+                   ng-model="service1.company" required>
+
+
+            <label for="inputVocabulary" class="control-label">Password</label>
+            <input type="text" id="inputVocabulary" class="form-control" placeholder="Type a vocabulary"
+                   ng-model="service1.vocab" required>
+
+            <button
+                class="btn btn-secondary btn-wide" style="margin-top: 10px"
+                ng-click="callLookUpCompanyTerm()">Lookup Company Term - Service</button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3>Call LookUp Classification Description</h3>
+        <div id="lookupAuthorityTerm" class="form-group">
+            <label for="inputClassCode" class="control-label">Class Code</label>
+            <input type="text" id="inputClassCode" class="form-control" placeholder="Type the class code"
+                   ng-model="service2.classcode" required>
+
+
+            <label for="inputVocabulary2" class="control-label">Password</label>
+            <input type="text" id="inputVocabulary2" class="form-control" placeholder="Type a vocabulary"
+                   ng-model="service2.vocab" required>
+
+            <button
+                class="btn btn-secondary btn-wide" style="margin-top: 10px"
+                ng-click="callLookUpClassificationDescription()">Lookup Classification Description - Service</button>
+        </div>
+        <br>
+        <br>
+        <h3>Response {{serviceCalled}}</h3>
+        <div id="taxonomyResponse" class="form-group">
+            <textarea id="response" class="form-control"
+                   ng-model="responseAsJson" ></textarea>
 
         </div>
     </form>
