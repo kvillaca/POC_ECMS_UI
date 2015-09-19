@@ -44,6 +44,8 @@ angular.module('ecmsEcmsUiApp').controller('LoginController',
                 uri: '/rest/auth/login/validate/'
             };
 
+            console.log(jsonInput);
+
             // Always clean the password after prepare or after used
             //$scope.credentials.password = undefined;
 
@@ -62,7 +64,14 @@ angular.module('ecmsEcmsUiApp').controller('LoginController',
                             username: undefined,
                             password: undefined
                         };
-                    });
+                        if (_.has($rootScope.header, "HEADER_VALUES")) {
+                            if ($rootScope.header.HEADER_VALUES.length === 3) {
+                                // need check if the HEADER_VALUES has all items populated.
+                                $location.path("/Taxonomy");
+                            }
+                        }
+                        console.log($rootScope.header);
+                    }, 50);
                 }, function (fail) {
                     $timeout(function () {
                         ecmsSession.set(undefined, false);
