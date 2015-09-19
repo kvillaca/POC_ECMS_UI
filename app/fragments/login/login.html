@@ -1,26 +1,22 @@
-<div class="splash-wrapper">
-    <div class="signin-overlay">
-        <div class="signin-wrapper">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <form name="loginForm" id="loginForm" class="form-signin" ng-submit="authenticateUser()" novalidate>
-                <div class="form-group" ng-class="loginError ? 'has-error' : ''"  >
-                    <label for="inputUsername" class="sr-only">Email address</label>
-                    <input type="text" id="inputUsername" class="form-control" placeholder="Use Your ProQuest ID"
-                           ng-model="credentials.username" ng-focus="clear()" required autofocus>
-                </div>
-                <div class="form-group" ng-class="loginError ? 'has-error' : ''">
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Use Your ProQuest Password"
-                           ng-model="credentials.password" ng-focus="clear()" required>
-                </div>
-                <div class="btn-group pull-right">
-                    <button class="btn btn-default btn-wide" type="submit">Sign in</button>
-                </div>
-            </form>
-            <div class="alert alert-danger" ng-show="loginError" ng-class="loginError ? 'fade in' : ''">{{loginErrorText}}</div>
-            <div class="bottom-right">
-                <a href="https://proquest.atlassian.net/wiki/display/TKB/Browser+Compatibility" target="_blank" class="italic">What browser is best to use?</a>
+<div>
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <form name="loginForm" id="loginForm" ng-submit="authenticateUser()" novalidate>
+        <div class="form-group">
+            <label for="inputUsername" class="col-sm-4 control-label">Email address</label>
+            <input type="text" id="inputUsername" class="form-control" placeholder="Use Your ProQuest ID"
+                   ng-model="credentials.username" required>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-sm-4 control-label">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Use Your ProQuest Password"
+                   ng-model="credentials.password" required>
+        </div>
+        <div >
+            <button class="btn btn-default btn-wide" type="submit">Sign in</button>
+            <br>
+            <div ng-show="loginError" ng-hide="!loginError" style="margin-top: 10px">
+                <div class="alert alert-danger" >{{errorMessage.errorCode}} : {{errorMessage.message}}</div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

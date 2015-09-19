@@ -12,70 +12,65 @@ var pocEcmsApp = angular.module('ecmsEcmsUiApp', [
     'ngAnimate',
     'ngSanitize',
     'ngStorage',
-    'ui.grid',       // replaces ngGrid
-    'ui.grid.pagination',
-    'ui.grid.selection',
-    'ui.grid.resizeColumns',
-    'ui.grid.autoResize',
-    'ui.grid.saveState',
-    'ui.codemirror',
     'ui.bootstrap',
     'ngRoute',
     'restangular'
 ]);
 
-pocEcmsApp.config(['$routerProvider', 'RestangularProvider',
-    function ($routeProvider,  RestangularProvider ) {
 
+/**
+ * Restangular Provider Config
+ */
+pocEcmsApp.config(['RestangularProvider',
+    function (RestangularProvider) {
         // Restangular initial configs
         //RestangularProvider.setBaseUrl('');
         RestangularProvider.setFullResponse(true);
+    }]);
 
 
-        // config for ui-Router
-        $urlRouterProvider.otherwise('/login');
+/**
+ * $routeProvider
+ */
+pocEcmsApp.config(function($routeProvider) {
 
-        $routeProvider
-            .$routeProvider.
-            when('/Login', {
-                            templateUrl: 'fragments/login/login.html',
+
+    $routeProvider
+            .when('/Login', {
+                            templateUrl: '/fragments/login/login.html',
                             controller: 'LoginController'
             })
-            .when('/notFound', {
-                                templateUrl: '404.html',
-                                controller: 'NotFoundController',
+            .when('/NotFound', {
+                                templateUrl: '/fragments/errors/404.html',
+                                controller: 'NotFoundController'
+            })
+            .when('/ServerError', {
+                                    templateUrl: '/fragments/errors/500.html',
+                                    controller: 'ServerErrorController'
+            })
+            .when('/Taxonomy', {
+                                templateUrl: '/fragments/taxonomy/taxonomy.html',
+                                controller: 'TaxonomyController',
                                 resolve : {
-                                    checkLogged : function(FactoryLogged) {
-                                        return FactoryLogged.hasTokenAndIsLogged();
+                                    checkLogged : function() {
+                                        return true;// $rootScope.header.HEADER_VALUES.TOKEN !== undefined;
                                     }
                                 }
             })
-            .state('serverError', {
-                url: '/serverError',
-                module: 'public',
-                templateUrl: '500.html',
-                controller: 'ServerErrorController',
-                resolve: {
-                    setPage: function ($rootScope) {
-                        $rootScope.page = 'serverError';
-                    }
-                }
-            })
-            .state('taxonomy', {
-                url: '/taxonomy',
-                module: 'private',
-                templateUrl: 'scripts/search/search.html',
-                controller: 'TaxonomyController',
-                resolve: {
-                    setPage: function ($rootScope) {
-                        $rootScope.page = 'taxonomy';
-                    }
-                }
+            .otherwise({
+                    redirectTo : '/Login'
             });
-    }]);
+    });
 
-pocEcmsApp.run(function ($rootScope, $location, $state, isPrivateService, terminate, getIPService,
-                      Restangular, signout, $sessionStorage, spinner) {
+
+
+//pocEcmsApp.run(['$log', '$rootScope', '$route', function ($log, $rootScope, $route) {
+//    // nothing
+//}]);
+
+
+pocEcmsApp.run(function ($rootScope, $location, terminate, $window, getIPService,
+                         Restangular, signout, $sessionStorage, spinner) {
     // Root variables, mean module public variables.
     var OK_RESPONSE = 200;
 
@@ -99,30 +94,18 @@ pocEcmsApp.run(function ($rootScope, $location, $state, isPrivateService, termin
      */
     Restangular.setErrorInterceptor(function (response) {
         if (response.status !== OK_RESPONSE) {
+            $rootScope.errorMessage = {errorCode : response.status,
+                message: response.data };
             spinner.off();
-            switch (response.status) {
-                case 500:
-                    $rootScope.errorMessage = {errorCode : response.status,
-                                               message: response.data };
-                    $state.go('serverError', {});
-                    return false;
-                    break;
-                case 404:
-                case 0:
-                    $rootScope.errorMessage = {errorCode : response.status,
-                                               message: response.data };
-                    $state.go('notFound', {});
-                    return false;
-                    break;
-                default:
-                    $rootScope.errorMessage = {errorCode : response.status,
-                                               message: response.data };
-                    return true;
+
+            if (response.status === 500 || response.status === 0) {
+                $location.path('/ServerError');
+            } else if (response.status === 404) {
+                $location.path('/NotFound');
             }
         } else {
             $rootScope.errorMessage = {errorCode : response.status,
                                        message: response.data };
-            return true;
         }
     });
 });

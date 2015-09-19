@@ -48,6 +48,22 @@ app.service('terminate', function ($rootScope, $sessionStorage, ecmsSession, upd
 
 
 
+
+//app.service('redirectToErrorPages', function($location) {
+//   this.go = function(errorStatusValue) {
+//       var isUnrecovableError = false;
+//       if (errorStatusValue === 500) {
+//           $location.path('/ServerError');
+//           isUnrecovableError = true;
+//       } else if (errorStatusValue === 404) {
+//           $location.path('/NotFound');
+//           isUnrecovableError = true;
+//       }
+//       return isUnrecovableError;
+//   };
+//});
+
+
 /**
  * Session from/to $sessionStorage - Get and Set.
  */
@@ -121,10 +137,11 @@ app.service('getIPService', function ($http, $q) {
  * @name ecmsEcmsUiApp.service:updateRestangularHeaders
  * @description updates headers in Restangular
  */
-app.service('updateRestangularHeaders', function (Restangular) {
+app.service('updateRestangularHeaders', function (Restangular, $rootScope) {
     return {
         addSessionId: function (header) {
             return Restangular.withConfig(function(RestangularConfigurer) {
+                $rootScope.header = header;
                 RestangularConfigurer.setDefaultHeaders({
                     'Content-Type': 'application/json',
                     'HEADER': header
@@ -146,10 +163,10 @@ app.service('updateRestangularHeaders', function (Restangular) {
 /*****************************************
  * SIGN OUT
  *****************************************/
-app.service('signout', function ($rootScope, $sessionStorage, terminate, $state) {
+app.service('signout', function ($rootScope, $sessionStorage, terminate, $location) {
     this.out = function () {
         terminate();
-        $state.go('login');
+        $location.path('/');
     };
 });
 

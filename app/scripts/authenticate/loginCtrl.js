@@ -8,20 +8,18 @@
  *
  * @requires $scope
  * */
-angular.module('ecmsEcmsUiApp').controller('LoginController', function ($scope,
-                                             $rootScope,
-                                             $state,
+angular.module('ecmsEcmsUiApp').controller('LoginController',
+                                    function ($scope,
+                                              $rootScope,
                                              $sessionStorage,
                                              ecmsSession,
                                              Restangular,
+                                             $location,
                                              updateRestangularHeaders,
                                              $timeout) {
 
 
-        var $this = this;   // alias for this controller
-
         // Scope defaults
-        $rootScope.loginError = false;
         $rootScope.userLoggedIn = ecmsSession.getUserLoggedIn() || false;
 
         // This is scoped because once the user is valid
@@ -37,7 +35,7 @@ angular.module('ecmsEcmsUiApp').controller('LoginController', function ($scope,
         $scope.authenticateUser = function () {
 
             // clear out any previous error messages
-            $scope.loginError = false;
+            $rootScope.loginError = false;
 
             // this is what we are passing on to the server for authentication
             var jsonInput = {
@@ -47,20 +45,19 @@ angular.module('ecmsEcmsUiApp').controller('LoginController', function ($scope,
             };
 
             // Always clean the password after prepare or after used
-            $scope.credentials.password = undefined;
+            //$scope.credentials.password = undefined;
 
 
             // Restangular call for Authenticate user!
             Restangular.one('/POC_ECMS_AUTH/rest/auth/login').post('authenticate', angular.toJson(jsonInput, true)).
                 then(function (response) {
                     $timeout(function () {
-                        $this.sessionKey = response.headers('HEADER_VALUES');
+                        var sessionKey = response.headers('HEADER_VALUES');
                         $sessionStorage.$default({session: null});
-                        ecmsSession.set($this.sessionKey, true);
-                        updateRestangularHeaders.addSessionId($this.sessionKey);
+                        ecmsSession.set(sessionKey, true);
+                        updateRestangularHeaders.addSessionId(sessionKey);
                         $rootScope.loginError = false;
                         $rootScope.userLoggedIn = true;
-
                         $scope.credentials = {
                             username: undefined,
                             password: undefined
@@ -68,17 +65,16 @@ angular.module('ecmsEcmsUiApp').controller('LoginController', function ($scope,
                     });
                 }, function (fail) {
                     $timeout(function () {
-                        $rootScope.loginError = true;
-                        $rootScope.errorMessage = {errorCode : fail.status,
-                                                   message: fail.data.message };
                         ecmsSession.set(undefined, false);
+                        $rootScope.loginError = true;
                         console.log(fail);
-                    });
+                    }, 50);
                 });
         };
 
 
-        // clear form data when user clicks back into login form after an error
+
+        //clear form data when user clicks back into login form after an error
         $scope.clear = function () {
             if ($rootScope.loginError) {
                 $rootScope.loginError = false;
