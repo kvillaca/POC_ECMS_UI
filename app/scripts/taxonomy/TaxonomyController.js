@@ -43,7 +43,7 @@ angular.module('ecmsEcmsUiApp')
             $scope.errorResponse = false;
 
             // Set Header
-            //RestangularProvider.setDefaultHeaders({HEADER : angular.toJson($rootScope.header)});
+            Restangular.setDefaultHeaders({HEADER : angular.toJson($rootScope.header)});
 
             // Call service
             //var valueToJson = angular.toJson($scope.service1, false);
@@ -56,12 +56,13 @@ angular.module('ecmsEcmsUiApp')
                         ecmsSession.set(sessionKey, true);
                         updateRestangularHeaders.addSessionId(sessionKey);
                         $scope.errorResponse = false;
-
+                        $scope.responseAsJson = angular.toJson(response.data, true);;
                         console.log($rootScope.header);
                     }, 50);
                 }, function (fail) {
                     $timeout(function () {
                         ecmsSession.set(undefined, false);
+                        $scope.responseAsJson = 'Empty';
                         $scope.errorResponse = true;
                         console.log(fail);
                     }, 50);
@@ -73,6 +74,9 @@ angular.module('ecmsEcmsUiApp')
         $scope.callLookUpClassificationDescription = function(){
             $scope.errorResponse = false;
 
+            // Set Header
+            Restangular.setDefaultHeaders({HEADER : angular.toJson($rootScope.header)});
+
             // Call service
             Restangular.one('/taxonomy/rest/tax/synaptica/authority/lookup').
                 get({classcode : $scope.service2.classcode, vocab : $scope.service2.vocab}).
@@ -83,13 +87,15 @@ angular.module('ecmsEcmsUiApp')
                         ecmsSession.set(sessionKey, true);
                         updateRestangularHeaders.addSessionId(sessionKey);
                         $scope.errorResponse = false;
+                        $scope.responseAsJson = angular.toJson(response.data, true);
                         console.log($rootScope.header);
                     }, 50);
                 }, function (fail) {
                     $timeout(function () {
                         ecmsSession.set(undefined, false);
                         $scope.errorResponse = true;
-                        console.log(fail);
+                        $scope.responseAsJson = 'Empty';
+                            console.log(fail);
                     }, 50);
                 });
         };
