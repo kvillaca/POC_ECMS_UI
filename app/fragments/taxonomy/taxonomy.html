@@ -14,6 +14,10 @@
                     class="btn btn-secondary btn-xs"
                     ng-click="revokeToken()"
                     style="margin-left: 5px;">Clear Token</button>
+                <button
+                    class="btn btn-secondary btn-xs"
+                    ng-click="clearFields()"
+                    style="margin-left: 5px;">Clear Fields</button>
                 <h1>Taxonomy&nbsp;<strong><span>:D</span></strong></h1>
             </div>
             <div id="errorShown" ng-show="errorResponse" ng-hide="!errorResponse">
@@ -78,12 +82,9 @@
         <br>
         <br>
         <h3>Response {{serviceCalled}}</h3>
-        <div id="taxonomyResponse" class="form-group">
-            <md-input-container flex>
+        <div id="taxonomyResponse" class="form-group" style="height: 300px; vertical-align: bottom; display: flex">
                 <textarea id="response" class="form-control"
                        ng-model="responseAsJson" ></textarea>
-            </md-input-container>
-
         </div>
     </form>
 </div>

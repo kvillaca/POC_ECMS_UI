@@ -43,6 +43,20 @@ angular.module('ecmsEcmsUiApp')
         };
 
 
+        $scope.clearFields = function() {
+            updateRestangularHeaders.removeSessionId();
+            $scope.errorResponse = false;
+            $scope.service1 = {company : undefined,
+                vocab: undefined};
+            $scope.service2 = {classcode : undefined,
+                vocab : undefined };
+            $scope.service3 = {termstart : undefined,
+                vocab : undefined };
+            $scope.serviceCalled = undefined;
+            $scope.responseAsJson= 'Empty';
+        };
+
+
         // Restangular call serviceone!
         $scope.callLookUpCompanyTerm = function() {
             $scope.errorResponse = false;
