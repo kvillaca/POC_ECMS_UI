@@ -128,7 +128,6 @@ app.service('updateRestangularHeaders', function (Restangular, $rootScope) {
                 $rootScope.header = angular.fromJson(header);
                 console.log("Setting header");
                 console.log($rootScope.header);
-
                 RestangularConfigurer.setDefaultHeaders({
                     'Content-Type': 'application/json',
                     'HEADER': header
