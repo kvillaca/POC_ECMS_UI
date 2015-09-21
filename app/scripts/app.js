@@ -63,15 +63,14 @@ pocEcmsApp.config(function($routeProvider) {
 
 
 
-//pocEcmsApp.run(['$log', '$rootScope', '$route', function ($log, $rootScope, $route) {
-//    // nothing
-//}]);
-
-
 pocEcmsApp.run(function ($rootScope, $location, terminate, $window, getIPService,
                          Restangular, signout, $sessionStorage, spinner) {
     // Root variables, mean module public variables.
     var OK_RESPONSE = 200;
+    var SERVER_ERROR_RESPONSE = 500;
+    var NOT_FOUND_RESPONSE = 404;
+    var FAIL_TO_RESPOND = 0;
+
 
     // I couldn't make the LoginCtrl see the parent $scope.
     $rootScope.loginError = false;
@@ -93,9 +92,9 @@ pocEcmsApp.run(function ($rootScope, $location, terminate, $window, getIPService
                 message: response.data };
             spinner.off();
 
-            if (response.status === 500 || response.status === 0) {
+            if (response.status === SERVER_ERROR_RESPONSE || response.status === FAIL_TO_RESPOND) {
                 $location.path('/ServerError');
-            } else if (response.status === 404) {
+            } else if (response.status === NOT_FOUND_RESPONSE) {
                 $location.path('/NotFound');
             }
         } else {

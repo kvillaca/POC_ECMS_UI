@@ -111,7 +111,7 @@ angular.module('ecmsEcmsUiApp')
                         $scope.errorResponse = false;
                         var plainResponse = Restangular.stripRestangular(response.data);
                         $scope.responseAsJson = angular.toJson(plainResponse, true);
-                        console.log($rootScope.header);
+                        console.log(plainResponse);
                     }, 50);
                 }, function (fail) {
                     $timeout(function () {

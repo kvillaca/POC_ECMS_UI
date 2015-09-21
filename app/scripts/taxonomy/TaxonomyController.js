@@ -86,7 +86,7 @@ angular.module('ecmsEcmsUiApp')
                         var plainResponse = Restangular.stripRestangular(response.data);
                         $scope.responseAsJson = angular.toJson(plainResponse, true);
                         console.log("new /taxonomy/rest/tax/synaptica/naic/lookup");
-                        console.log($rootScope.header);
+                        console.log(plainResponse);
                     }, 50);
                 }, function (fail) {
                     $timeout(function () {
