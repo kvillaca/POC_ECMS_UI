@@ -143,10 +143,16 @@ module.exports = function (grunt) {
                 ]
                 //proxies: [
                 //    {
-                //        context: '/ecms/rest',
+                //        context: '/POC_ECMS_AUTH',
                 //        host: 'ecmsweb301.dc4.pqe',
                 //        port: 9000,
                 //        https: false
+                //    },
+                //      {
+                //          context: '/taxonomy',
+                //          host: 'ecmsweb301.dc4.pqe',
+                //          port: 9000,
+                //          https: false
                 //    }
                 //]
             }
