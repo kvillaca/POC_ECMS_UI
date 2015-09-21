@@ -15,8 +15,13 @@ angular.module('ecmsEcmsUiApp')
         $scope.service1 = {company : undefined,
                            vocab: undefined};
 
-        // Entry fields for service two - lookupAuthorityTerm
+        // Entry fields for service two - lookupClassificationDescription
         $scope.service2 = {classcode : undefined,
+                           vocab : undefined };
+
+
+        // Entry fields for service three - termStartsWith
+        $scope.service3 = {termstart : undefined,
                            vocab : undefined };
 
         // Display service name called
@@ -96,6 +101,39 @@ angular.module('ecmsEcmsUiApp')
                         $scope.errorResponse = true;
                         $scope.responseAsJson = 'Empty';
                             console.log(fail);
+                    }, 50);
+                });
+        };
+
+
+
+        // Restangular call servicethree!
+        $scope.termStarsWith = function(){
+            $scope.errorResponse = false;
+
+            // Set Header
+            Restangular.setDefaultHeaders({HEADER : angular.toJson($rootScope.header)});
+
+            // Call service
+            Restangular.one('/taxonomy/rest/tax/synaptica/authority/startswith').
+                get({classcode : $scope.service3.termstart, vocab : $scope.service3.vocab}).
+                then(function (response) {
+                    $timeout(function () {
+                        var sessionKey = response.headers('HEADER');
+                        $sessionStorage.$default({session: null});
+                        ecmsSession.set(sessionKey, true);
+                        updateRestangularHeaders.addSessionId(sessionKey);
+                        $scope.errorResponse = false;
+                        Restangular.str
+                        $scope.responseAsJson = angular.toJson(response.data, true);
+                        console.log($rootScope.header);
+                    }, 50);
+                }, function (fail) {
+                    $timeout(function () {
+                        ecmsSession.set(undefined, false);
+                        $scope.errorResponse = true;
+                        $scope.responseAsJson = 'Empty';
+                        console.log(fail);
                     }, 50);
                 });
         };

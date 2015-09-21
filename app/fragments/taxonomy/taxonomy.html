@@ -29,7 +29,7 @@
                    ng-model="service1.company" required>
 
 
-            <label for="inputVocabulary" class="control-label">Password</label>
+            <label for="inputVocabulary" class="control-label">Vocab</label>
             <input type="text" id="inputVocabulary" class="form-control" placeholder="Type a vocabulary"
                    ng-model="service1.vocab" required>
 
@@ -48,13 +48,32 @@
                    ng-model="service2.classcode" required>
 
 
-            <label for="inputVocabulary2" class="control-label">Password</label>
+            <label for="inputVocabulary2" class="control-label">Vocab</label>
             <input type="text" id="inputVocabulary2" class="form-control" placeholder="Type a vocabulary"
                    ng-model="service2.vocab" required>
 
             <button
                 class="btn btn-secondary btn-wide" style="margin-top: 10px"
                 ng-click="callLookUpClassificationDescription()">Lookup Classification Description - Service</button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3>Call Term Starts With</h3>
+        <div id="termStartsWith" class="form-group">
+            <label for="inputTermStart" class="control-label">Class Code</label>
+            <input type="text" id="inputTermStart" class="form-control" placeholder="Type the term start"
+                   ng-model="service3.termstart" required>
+
+
+            <label for="inputVocabulary3" class="control-label">Vocab</label>
+            <input type="text" id="inputVocabulary3" class="form-control" placeholder="Type a vocabulary"
+                   ng-model="service3.vocab" required>
+
+            <button
+                class="btn btn-secondary btn-wide" style="margin-top: 10px"
+                ng-click="termStarsWith()">Term Starts With - Service</button>
         </div>
         <br>
         <br>
