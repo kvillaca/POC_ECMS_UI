@@ -126,6 +126,9 @@ app.service('updateRestangularHeaders', function (Restangular, $rootScope) {
         addSessionId: function (header) {
             return Restangular.withConfig(function(RestangularConfigurer) {
                 $rootScope.header = angular.fromJson(header);
+                console.log("Setting header");
+                console.log($rootScope.header);
+
                 RestangularConfigurer.setDefaultHeaders({
                     'Content-Type': 'application/json',
                     'HEADER': header
@@ -134,6 +137,8 @@ app.service('updateRestangularHeaders', function (Restangular, $rootScope) {
         },
         removeSessionId: function () {
             return Restangular.withConfig(function(RestangularConfigurer) {
+                console.log("Removing header");
+                $rootScope.header = undefined;
                 RestangularConfigurer.setDefaultHeaders({
                     'Content-Type': 'application/json'
                 });

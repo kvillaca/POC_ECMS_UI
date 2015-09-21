@@ -3,7 +3,7 @@
  * Created by kvillaca on 9/19/2015.
  */
 angular.module('ecmsEcmsUiApp')
-    .controller('TaxonomyController', function ($scope, Restangular,
+    .controller('Taxonomyv2Controller', function ($scope, Restangular,
                                                 terminate, $location,
                                                 updateRestangularHeaders, ecmsSession,
                                                 $sessionStorage, $rootScope,
@@ -13,7 +13,8 @@ angular.module('ecmsEcmsUiApp')
 
         // Entry fields for service one - lookupCompanyTerm
         $scope.service1 = {company : undefined,
-                           vocab: undefined};
+                           vocab: undefined,
+                           extra: undefined };
 
         // Entry fields for service two - lookupClassificationDescription
         $scope.service2 = {classcode : undefined,
@@ -33,7 +34,7 @@ angular.module('ecmsEcmsUiApp')
 
         $scope.goBack = function() {
             terminate();
-            $location.path('/Login');
+            $location.path('/Taxonomy');
         };
 
 
@@ -47,20 +48,15 @@ angular.module('ecmsEcmsUiApp')
             updateRestangularHeaders.removeSessionId();
             $scope.errorResponse = false;
             $scope.service1 = {company : undefined,
-                vocab: undefined};
+                                vocab: undefined,
+                                extra: undefined };
             $scope.service2 = {classcode : undefined,
-                vocab : undefined };
+                                vocab : undefined };
             $scope.service3 = {termstart : undefined,
-                vocab : undefined };
+                                vocab : undefined };
             $scope.serviceCalled = undefined;
             $scope.responseAsJson= 'Empty';
         };
-
-
-        $scope.version2 = function() {
-            $location.path('/v2/Taxonomy');
-        };
-
 
 
         // Restangular call serviceone!
@@ -69,13 +65,11 @@ angular.module('ecmsEcmsUiApp')
 
             // Set Header
             Restangular.setDefaultHeaders({HEADER : angular.toJson($rootScope.header)});
-            console.log("old header /taxonomy/rest/tax/synaptica/naic/lookup");
-            console.log($rootScope.header);
 
             // Call service
             //var valueToJson = angular.toJson($scope.service1, false);
-            Restangular.one('/taxonomy/rest/tax/synaptica/naic/lookup').
-                get({company: $scope.service1.company, vocab : $scope.service1.vocab}).
+            Restangular.one('/taxonomy/rest/tax/synaptica/v2/naic/lookup').
+                get({company: $scope.service1.company, vocab : $scope.service1.vocab, extra : $scope.service1.extra}).
                 then(function (response) {
                     $timeout(function () {
                         var sessionKey = response.headers('HEADER');
@@ -85,7 +79,6 @@ angular.module('ecmsEcmsUiApp')
                         $scope.errorResponse = false;
                         var plainResponse = Restangular.stripRestangular(response.data);
                         $scope.responseAsJson = angular.toJson(plainResponse, true);
-                        console.log("new /taxonomy/rest/tax/synaptica/naic/lookup");
                         console.log($rootScope.header);
                     }, 50);
                 }, function (fail) {

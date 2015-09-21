@@ -18,12 +18,7 @@
                     class="btn btn-secondary btn-xs"
                     ng-click="clearFields()"
                     style="margin-left: 5px;">Clear Fields</button>
-                <button
-                    class="btn btn-secondary btn-xs"
-                    ng-click="version2()"
-                    style="margin-left: 5px;">Services v2</button>
-
-                <h1>Taxonomy&nbsp;<strong><span>v1.0</span></strong></h1>
+                <h1>Taxonomy&nbsp;<strong><span>v2.0</span></strong></h1>
             </div>
             <div id="errorShown" ng-show="errorResponse" ng-hide="!errorResponse">
                 <div class="alert alert-danger" >{{errorMessage.errorCode}} : {{errorMessage.message}}</div>
@@ -31,7 +26,7 @@
 
         </div>
         <br>
-        <h3>Call LookUp Company Term Service</h3>
+        <h3>Call LookUp Company Term Service v2</h3>
         <div id="lookupCompanyTerm" class="form-group">
             <label for="inputCompany" class="control-label">Company</label>
             <input type="text" id="inputCompany" class="form-control" placeholder="Type the company"
@@ -41,6 +36,11 @@
             <label for="inputVocabulary" class="control-label">Vocab</label>
             <input type="text" id="inputVocabulary" class="form-control" placeholder="Type a vocabulary"
                    ng-model="service1.vocab" required>
+
+
+            <label for="inputExtra" class="control-label">Vocab</label>
+            <input type="text" id="inputExtra" class="form-control" placeholder="Type a something extra"
+                   ng-model="service1.extra" required>
 
             <button
                 class="btn btn-secondary btn-wide" style="margin-top: 10px"

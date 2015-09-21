@@ -57,6 +57,15 @@ pocEcmsApp.config(function($routeProvider) {
                                     }
                                 }
             })
+            .when('/v2/Taxonomy', {
+                templateUrl: '/fragments/taxonomy/taxonomyv2.html',
+                controller: 'Taxonomyv2Controller',
+                resolve : {
+                    checkLogged : function() {
+                        return true;// $rootScope.header.HEADER_VALUES.TOKEN !== undefined;
+                    }
+                }
+            })
             .otherwise({
                     redirectTo : '/Login'
             });
