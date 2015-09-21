@@ -51,20 +51,10 @@ pocEcmsApp.config(function($routeProvider) {
             .when('/Taxonomy', {
                                 templateUrl: '/fragments/taxonomy/taxonomy.html',
                                 controller: 'TaxonomyController',
-                                resolve : {
-                                    checkLogged : function() {
-                                        return true;// $rootScope.header.HEADER_VALUES.TOKEN !== undefined;
-                                    }
-                                }
             })
             .when('/v2/Taxonomy', {
                 templateUrl: '/fragments/taxonomy/taxonomyv2.html',
                 controller: 'Taxonomyv2Controller',
-                resolve : {
-                    checkLogged : function() {
-                        return true;// $rootScope.header.HEADER_VALUES.TOKEN !== undefined;
-                    }
-                }
             })
             .otherwise({
                     redirectTo : '/Login'
@@ -86,11 +76,7 @@ pocEcmsApp.run(function ($rootScope, $location, terminate, $window, getIPService
     // I couldn't make the LoginCtrl see the parent $scope.
     $rootScope.loginError = false;
     $rootScope.userLoggedIn = false;
-    $rootScope.credentials = {
-        username: undefined,
-        password: undefined,
-        rememberMe: false
-    };
+
     $rootScope.loginErrorText = undefined;
     $rootScope.errorMessage = { errorCode : undefined,
                                 message : undefined};
