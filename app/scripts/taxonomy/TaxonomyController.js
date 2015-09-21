@@ -61,7 +61,8 @@ angular.module('ecmsEcmsUiApp')
                         ecmsSession.set(sessionKey, true);
                         updateRestangularHeaders.addSessionId(sessionKey);
                         $scope.errorResponse = false;
-                        $scope.responseAsJson = angular.toJson(response.data, true);;
+                        var plainResponse = Restangular.stripRestangular(response.data);
+                        $scope.responseAsJson = angular.toJson(plainResponse, true);
                         console.log($rootScope.header);
                     }, 50);
                 }, function (fail) {
@@ -92,7 +93,8 @@ angular.module('ecmsEcmsUiApp')
                         ecmsSession.set(sessionKey, true);
                         updateRestangularHeaders.addSessionId(sessionKey);
                         $scope.errorResponse = false;
-                        $scope.responseAsJson = angular.toJson(response.data, true);
+                        var plainResponse = Restangular.stripRestangular(response.data);
+                        $scope.responseAsJson = angular.toJson(plainResponse, true);
                         console.log($rootScope.header);
                     }, 50);
                 }, function (fail) {
@@ -124,8 +126,8 @@ angular.module('ecmsEcmsUiApp')
                         ecmsSession.set(sessionKey, true);
                         updateRestangularHeaders.addSessionId(sessionKey);
                         $scope.errorResponse = false;
-                        Restangular.str
-                        $scope.responseAsJson = angular.toJson(response.data, true);
+                        var plainResponse = Restangular.stripRestangular(response.data);
+                        $scope.responseAsJson = angular.toJson(plainResponse, true);
                         console.log($rootScope.header);
                     }, 50);
                 }, function (fail) {

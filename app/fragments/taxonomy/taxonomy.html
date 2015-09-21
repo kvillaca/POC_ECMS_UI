@@ -79,8 +79,10 @@
         <br>
         <h3>Response {{serviceCalled}}</h3>
         <div id="taxonomyResponse" class="form-group">
-            <textarea id="response" class="form-control"
-                   ng-model="responseAsJson" ></textarea>
+            <md-input-container flex>
+                <textarea id="response" class="form-control"
+                       ng-model="responseAsJson" ></textarea>
+            </md-input-container>
 
         </div>
     </form>
