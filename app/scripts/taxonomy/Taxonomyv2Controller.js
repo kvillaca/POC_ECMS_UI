@@ -33,7 +33,6 @@ angular.module('ecmsEcmsUiApp')
 
 
         $scope.goBack = function() {
-            terminate();
             $location.path('/Taxonomy');
         };
 

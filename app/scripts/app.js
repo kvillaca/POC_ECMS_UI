@@ -94,9 +94,10 @@ pocEcmsApp.run(function ($rootScope, $location, terminate, $window, getIPService
 
             if (response.status === SERVER_ERROR_RESPONSE || response.status === FAIL_TO_RESPOND) {
                 $location.path('/ServerError');
-            } else if (response.status === NOT_FOUND_RESPONSE) {
-                $location.path('/NotFound');
             }
+            //} else if (response.status === NOT_FOUND_RESPONSE) {
+            //    $location.path('/NotFound');
+            //}
         } else {
             $rootScope.errorMessage = {errorCode : response.status,
                                        message: response.data };
